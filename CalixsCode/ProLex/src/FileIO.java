@@ -65,6 +65,7 @@ public class FileIO {
 				line = line.substring(line.indexOf(" - ")+3);
 				String replacement = line.substring(0, line.indexOf(" - "));
 				line = line.substring(line.indexOf(" - ")+3);
+				line = line.trim();
 				if(line.charAt(0) == '#') {
 					line = line.substring(1);
 				}
