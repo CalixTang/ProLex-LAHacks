@@ -66,7 +66,7 @@ clit - female genitals - 2
 clitface - idiot - 2
 clitfuck - sexual act - 2
 clusterfuck - mess up - 2
-cock - penis - 2
+cock - male genitalia - 2
 cockass - Jerk - 2
 cockbite - idiot - 2
 cockburger - idiot - 2
@@ -92,7 +92,7 @@ cockwaffle - idiot - 2
 coochie - female genitalia - 2
 coochy - female genitalia - 2
 coon - African American - 1
-cooter - vagina - 2
+cooter - female genitals - 2
 cracker - Caucasian - 1
 cumbubble - idiot - 1
 cumdumpster - prostitute - 2
@@ -112,7 +112,7 @@ cuntslut - idiot - 2
 dago - Italian - 3
 damn - darn - 0
 deggo - Italian - 3
-dick - penis - 2
+dick - male genitalia - 2
 dick-sneeze - orgasm - 2
 dickbag - idiot - 2
 dickbeaters - Hands - 2
@@ -160,7 +160,7 @@ fatass - a fat person - 2
 fellatio - sexual act - 2
 feltch - sexual act - 2
 flamer - homosexual  - 3
-fuck - fornicate - 2
+fuck - freak - 2
 fuckass - idiot - 2
 fuckbag - idiot - 2
 fuckboy - idiot - 2
@@ -234,7 +234,7 @@ minge - female genitalia - 2
 mothafucka - Jerk - 0
 mothafuckin\' - mother loving - 2
 motherfucker - mother lover - 2
-motherfucking - fornicating with mother - 2
+motherfucking - mother loving - 2
 muff - female genitalia - 2
 muffdiver - homosexual - 3
 munging - sexual act - 2
@@ -246,7 +246,7 @@ niggers - African Americans - 1
 niglet - african american child - 1
 nut sack - male genitalia - 2
 nutsack - male genitalia - 2
-paki - pakistanien - 1
+paki - pakistani - 1
 panooch - femail genitalia - 2
 pecker - Penis - 2
 peckerhead - idiot - 0
@@ -273,7 +273,7 @@ pussies - Female Genitals - 2
 pussy - female reproductive organ - 2
 pussylicking - sexual act - 2
 puto - idiot - 0
-queef - vaginal fart. - 2
+queef - female genitalia fart. - 2
 queer - homosexual - 3
 queerbait - homosexual - 3
 queerhole - homosexual - 3
@@ -313,7 +313,6 @@ slut - sexually popular woman - 2
 slutbag - sexually popular woman - 2
 smeg - poop - 0
 snatch - female genitalia - 2
-spic - mexican - 1
 spick - mexican american - 1
 splooge - ejaculate - 2
 spook - White person - 1
@@ -327,7 +326,7 @@ tits - breasts - 2
 tittyfuck - sexual act - 2
 twat - female genitals - 2
 twatlips - idiot - 2
-twats - vaginas - 2
+twats - female genitalia - 2
 twatwaffle - homosexual - 3
 unclefucker - homosexual - 3
 va-j-j - female genitalia - 2

@@ -44,9 +44,7 @@ public class Main extends JPanel {
 	private JButton clear;
 	private JButton exit;
 	private JLabel title;
-	private Color c = new Color(47, 47, 47);
-	private Color y = new Color(0, 255, 0); // Text
-	private Color p = new Color(255, 0, 0); // Highlight
+	private JButton logo;
 	public static final String fileName = "data" + FileIO.fileSep + "def.txt";
 	private ImageIcon clearImg = new ImageIcon("data" + FileIO.fileSep + "clear.png");
 	private ImageIcon copyImg = new ImageIcon("data" + FileIO.fileSep + "copy.png");
@@ -54,7 +52,7 @@ public class Main extends JPanel {
 	private ImageIcon filterImg = new ImageIcon("data" + FileIO.fileSep + "filter.png");
 	private ImageIcon listImg = new ImageIcon("data" + FileIO.fileSep + "list.png");
 	private ImageIcon pasteImg = new ImageIcon("data" + FileIO.fileSep + "paste.png");
-	
+	private ImageIcon logoImg = new ImageIcon("data" + FileIO.fileSep + "logowithname.png");
 	
 	public Main() {
 		title = new JLabel();
@@ -78,9 +76,13 @@ public class Main extends JPanel {
 			}
 		}
 
+		JLabel jl=new JLabel();
+	    jl.setIcon(new javax.swing.ImageIcon("data" + FileIO.fileSep + "logowithname.png"));
+	    this.add(jl);
+		
 		frmMomentum = new JFrame();
 		menu = new JPanel();
-		menu.setBounds(0, 0, 1100 - 350, 700);
+		menu.setBounds(0, 0, 1100 - 350, 800);
 		menu.setVisible(true);
 		menu.setBackground(new Color(52, 53, 57));
 		menu.setLayout(null);
@@ -91,25 +93,26 @@ public class Main extends JPanel {
 		words = new JButton(listImg);
 		clear = new JButton(clearImg);
 		run = new JButton(filterImg);
+		logo = new JButton(logoImg);
 
 		frmMomentum.setTitle("Prolex");
-		frmMomentum.setBounds(100, 100, 1100, 700);
+		frmMomentum.setBounds(100, 100, 1100, 800);
 		frmMomentum.setBackground(new Color(255));
 		frmMomentum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMomentum.getContentPane().setLayout(new BorderLayout(0, 0));
 		frmMomentum.setResizable(false);
 
 		editor = new JTextArea(100, 100);
-		editor.setBounds(350, 50, 720, 600);
+		editor.setBounds(350, 150, 720, 600);
 		editor.setBackground(new Color(255, 255, 255));
 		editor.setSelectedTextColor(new Color(78, 120, 237));
 		editor.setSelectionColor(Color.WHITE);
 		editor.setForeground(Color.BLACK);
 		editor.setCaretColor(Color.BLACK);
-		editor.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+		editor.setFont(new Font("Avenir", Font.PLAIN, 20));
 		scroll = new JScrollPane(editor, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroll.setBounds(350, 50, 720, 600);
+		scroll.setBounds(350, 150, 720, 600);
 //		scroll.add(editor);
 
 		frmMomentum.add(scroll);
@@ -130,7 +133,7 @@ public class Main extends JPanel {
 				// if we want to primarily sort by index in string, we need to sort the
 				// foundwords by index
 				// to do that, we could implement the comparable interface in FileIO
-				Object[] o = { "replace", "keep" };
+				Object[] o = { "Replace", "Keep" };
 				Highlighter h = editor.getHighlighter();
 				HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(Color.red);
 
@@ -228,18 +231,22 @@ public class Main extends JPanel {
 			}
 		});
 
-		run.setBounds(15 + 25, 95, 220, 43);
-		copy.setBounds(15 + 25, 195, 227, 43);
-		paste.setBounds(15 + 25, 295, 227, 43);
-		clear.setBounds(15 + 25, 395, 227, 43);
-		words.setBounds(15 + 25, 495, 227, 43);
-		exit.setBounds(15 + 25, 595, 227, 43);
+		int x = 100;
+		
+		run.setBounds(15 + 25, 70 + x, 220, 43);
+		copy.setBounds(15 + 25, 170 + x, 227, 43);
+		paste.setBounds(15 + 25, 270 + x, 227, 43);
+		clear.setBounds(15 + 25, 370 + x, 227, 43);
+		words.setBounds(15 + 25, 470 + x, 227, 43);
+		exit.setBounds(15 + 25, 570 + x, 227, 43);
+		logo.setBounds(135, 35, 817, 97);
 		menu.add(run);
 		menu.add(paste);
 		menu.add(words);
 		menu.add(exit);
 		menu.add(clear);
 		menu.add(copy);
+		menu.add(logo);
 
 	}
 
@@ -254,6 +261,7 @@ public class Main extends JPanel {
 				try {
 					Main window = new Main();
 					window.frmMomentum.setVisible(true);
+					window.setBounds(100, 100, 1100, 800);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
