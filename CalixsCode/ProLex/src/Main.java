@@ -93,11 +93,11 @@ public class Main extends JPanel {
 
 		editor = new JTextArea(100, 100);
 		editor.setBounds(350, 50, 720, 600);
-		editor.setBackground(c);
+		editor.setBackground(new Color(255, 255, 255));
 		editor.setSelectedTextColor(p);
 		editor.setSelectionColor(c);
 		editor.setForeground(y);
-		editor.setCaretColor(Color.RED);
+		editor.setCaretColor(Color.BLACK);
 		editor.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 		scroll = new JScrollPane(editor, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -248,7 +248,7 @@ public class Main extends JPanel {
 	}
 
 	public static void main(String[] args) {
-		ArrayList<String> strings = FileIO.readFile("data" + FileIO.fileSep + "def.txt");
+		ArrayList<String> strings = FileIO.readFile("src" + FileIO.fileSep + "def.txt");
 		badWords = FileIO.readBadWords(strings);
 
 		//
