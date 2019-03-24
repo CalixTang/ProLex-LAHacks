@@ -5,6 +5,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -43,6 +46,7 @@ public class Main extends JPanel {
 	private JButton paste;
 	private JButton clear;
 	private JButton exit;
+	private JButton save;
 	private JLabel title;
 	private JButton logo;
 	public static final String fileName = "data" + FileIO.fileSep + "def.txt";
@@ -53,6 +57,7 @@ public class Main extends JPanel {
 	private ImageIcon listImg = new ImageIcon("data" + FileIO.fileSep + "list.png");
 	private ImageIcon pasteImg = new ImageIcon("data" + FileIO.fileSep + "paste.png");
 	private ImageIcon logoImg = new ImageIcon("data" + FileIO.fileSep + "logowithname.png");
+	private ImageIcon saveImg = new ImageIcon("data" + FileIO.fileSep + "save.png");
 	
 	public Main() {
 		title = new JLabel();
@@ -82,7 +87,7 @@ public class Main extends JPanel {
 		
 		frmMomentum = new JFrame();
 		menu = new JPanel();
-		menu.setBounds(0, 0, 1100 - 350, 800);
+		menu.setBounds(0, 0, 1100 - 350, 900);
 		menu.setVisible(true);
 		menu.setBackground(new Color(52, 53, 57));
 		menu.setLayout(null);
@@ -94,16 +99,17 @@ public class Main extends JPanel {
 		clear = new JButton(clearImg);
 		run = new JButton(filterImg);
 		logo = new JButton(logoImg);
+		save = new JButton(saveImg);
 
 		frmMomentum.setTitle("Prolex");
-		frmMomentum.setBounds(100, 100, 1100, 800);
+		frmMomentum.setBounds(100, 100, 1100, 900);
 		frmMomentum.setBackground(new Color(255));
 		frmMomentum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMomentum.getContentPane().setLayout(new BorderLayout(0, 0));
 		frmMomentum.setResizable(false);
 
 		editor = new JTextArea(100, 100);
-		editor.setBounds(350, 150, 720, 600);
+		editor.setBounds(350, 150, 720, 700);
 		editor.setBackground(new Color(255, 255, 255));
 		editor.setSelectedTextColor(new Color(78, 120, 237));
 		editor.setSelectionColor(Color.WHITE);
@@ -112,7 +118,7 @@ public class Main extends JPanel {
 		editor.setFont(new Font("Avenir", Font.PLAIN, 20));
 		scroll = new JScrollPane(editor, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroll.setBounds(350, 150, 720, 600);
+		scroll.setBounds(350, 150, 720, 700);
 //		scroll.add(editor);
 
 		frmMomentum.add(scroll);
@@ -123,7 +129,7 @@ public class Main extends JPanel {
 
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String str = editor.getText();
+				String str = editor.getText().toLowerCase();
 				ArrayList<BadWord> foundWords = FileIO.parseForBadWords(str);
 				/*
 				 * for(BadWord b : foundWords) { System.out.println(b); }
@@ -230,6 +236,53 @@ public class Main extends JPanel {
 				}
 			}
 		});
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String badWord = JOptionPane.showInputDialog(null, "The Bad Word:", "New Word", JOptionPane.QUESTION_MESSAGE);
+				if(badWord==null) {
+					return;
+				}
+				String replacement = JOptionPane.showInputDialog(null, "The Replacement Word:", "New Word", JOptionPane.QUESTION_MESSAGE);
+				if(replacement==null) {
+					return;
+				}
+				String message = JOptionPane.showInputDialog(null, "The Message:", "New Word", JOptionPane.QUESTION_MESSAGE);
+				if(message==null) {
+					return;
+				}
+				badWord = badWord.toLowerCase();
+				
+				int n = -1;
+				try {
+					n = Integer.parseInt(message);
+				}catch(NumberFormatException e) {
+					message = "#" + message;
+				}
+				PrintWriter writer = null;
+				try {
+					writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName,true)));
+					writer.println("");
+					if(n==-1) {
+						writer.print(badWord+ FileIO.valueSep+replacement+FileIO.valueSep+message);
+						badWords.add(new BadWord(badWord,replacement,message));
+					}else {
+						writer.print(badWord + FileIO.valueSep + replacement + FileIO.valueSep + n);
+						badWords.add(new BadWord(badWord,replacement,""+n));
+					}
+					writer.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally {
+					try {
+						writer.close();
+					}catch(Exception e) {
+						
+					}
+				}
+				
+			}
+		});
 
 		int x = 100;
 		
@@ -237,8 +290,9 @@ public class Main extends JPanel {
 		copy.setBounds(15 + 25, 170 + x, 227, 43);
 		paste.setBounds(15 + 25, 270 + x, 227, 43);
 		clear.setBounds(15 + 25, 370 + x, 227, 43);
-		words.setBounds(15 + 25, 470 + x, 227, 43);
-		exit.setBounds(15 + 25, 570 + x, 227, 43);
+		words.setBounds(15 + 22, 470 + x, 227, 43);
+		save.setBounds(15 + 28, 570 + x, 210, 43);
+		exit.setBounds(15 + 25, 670 + x, 227, 43);
 		logo.setBounds(135, 35, 817, 97);
 		menu.add(run);
 		menu.add(paste);
@@ -247,6 +301,7 @@ public class Main extends JPanel {
 		menu.add(clear);
 		menu.add(copy);
 		menu.add(logo);
+		menu.add(save);
 
 	}
 
