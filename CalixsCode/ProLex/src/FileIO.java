@@ -85,10 +85,26 @@ public class FileIO {
 	public static ArrayList<BadWord> parseForBadWords(String input) {
 		ArrayList<BadWord> badWords = new ArrayList<BadWord>();
 		for(int i = 0; i < Main.badWords.size(); i++) {
-			int index = -1;
-			while(input.indexOf(Main.badWords.get(i).getBadWord(), index + 1) != -1) {
-				badWords.add(new BadWord(Main.badWords.get(i),input.indexOf(Main.badWords.get(i).getBadWord())));
-				index = input.indexOf(Main.badWords.get(i).getBadWord(),index+1) + Main.badWords.get(i).getBadWord().length();
+			int index = 0;
+			String inputClone = input;
+			/*
+			while(input.indexOf(Main.badWords.get(i).getBadWord(), index ) != -1) {
+				badWords.add(new BadWord(Main.badWords.get(i),input.indexOf(Main.badWords.get(i).getBadWord(),index)));
+				//input = input.substring(index+1);
+				index = input.indexOf(Main.badWords.get(i).getBadWord(),index+1) ;
+			}
+			*/
+			if (input.contains(Main.badWords.get(i).getBadWord())) {
+				while (inputClone.length() > 0) {
+					index = inputClone.indexOf(Main.badWords.get(i).getBadWord());
+					if (index != -1) {
+						badWords.add(new BadWord(Main.badWords.get(i), index + input.length()-inputClone.length()));
+						inputClone = inputClone.substring(index+1);
+					}else {
+						break;
+					}
+
+				}
 			}
 		}
 		return badWords;

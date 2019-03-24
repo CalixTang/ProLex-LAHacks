@@ -131,6 +131,7 @@ public class Main extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String str = editor.getText().toLowerCase();
 				ArrayList<BadWord> foundWords = FileIO.parseForBadWords(str);
+				ArrayList<Integer> keepIndices = new ArrayList<Integer>();
 				/*
 				 * for(BadWord b : foundWords) { System.out.println(b); }
 				 */
@@ -144,32 +145,40 @@ public class Main extends JPanel {
 				HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(Color.red);
 
 				while (!foundWords.isEmpty()) {
-					BadWord b = foundWords.get(0);
+					//BadWord b = foundWords.get(0);
 					h.removeAllHighlights();
-					try {
-						h.addHighlight(b.getIndex(), b.getIndex() + b.getBadWord().length(), painter);
-					} catch (BadLocationException e) {
-						e.printStackTrace();
-					}
-					int n = 2;
+					for(BadWord b : foundWords) {
+						try {
+							h.addHighlight(b.getIndex(), b.getIndex() + b.getBadWord().length(), painter);
+						} catch (BadLocationException e) {
+							e.printStackTrace();
+						}
+						int n = 2;
+						if (!b.isKept())
+							n = JOptionPane.showOptionDialog(null, b.getMessage() + b.getReplacement(), "Bad word found!",
+									JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, o, o[1]);
+						if (n == 0) {// replace
+							h.removeAllHighlights();
+							editor.setText(editor.getText().substring(0, b.getIndex()) + b.getReplacement()
+									+ editor.getText().substring(b.getIndex() + b.getBadWord().length()));
 
-					if (!b.isKept())
-						n = JOptionPane.showOptionDialog(null, b.getMessage() + b.getReplacement(), "Bad word found!",
-								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, o, o[1]);
-					if (n == 0) {// replace
+						} else if (n == 1) {// keep
+							keepIndices.add(b.getIndex());
+							h.removeAllHighlights();
+						}
 						h.removeAllHighlights();
-						editor.setText(editor.getText().substring(0, b.getIndex()) + b.getReplacement()
-								+ editor.getText().substring(b.getIndex() + b.getBadWord().length()));
-
-					} else if (n == 1) {// keep
-						b.setKept(true);
-						h.removeAllHighlights();
-					}
-
-					h.removeAllHighlights();
-
-					str = editor.getText();
+					}					
+					str = editor.getText().toLowerCase();
 					foundWords = FileIO.parseForBadWords(str);
+					for(int i = 0; i < foundWords.size();i++) {
+						for(int j = 0; j< keepIndices.size();j++) {
+							if(foundWords.get(i).getIndex()==keepIndices.get(j)) {
+								foundWords.remove(i);
+								i--;
+								break;
+							}
+						}
+					}
 				}
 			}
 
