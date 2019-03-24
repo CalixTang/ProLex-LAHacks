@@ -3,12 +3,20 @@ public class BadWord {
 	private String badWord;
 	private String replacement;
 	private String message;
+	private boolean kept;
+	public boolean isKept() {
+		return kept;
+	}
+	public void setKept(boolean kept) {
+		this.kept = kept;
+	}
 	private int index;
 	
 	public BadWord(String badWord, String replacement, String message) {
 		this.badWord = badWord;
 		this.replacement = replacement;
 		this.index = -1;
+		this.kept = false;
 		try {
 			int n = Integer.parseInt(message);
 			if(n<0 || n>FileIO.messages.length - 1) {
@@ -24,6 +32,7 @@ public class BadWord {
 		this.badWord = badWord;
 		this.replacement = replacement;
 		this.index = index;
+		this.kept = false;
 		try {
 			int n = Integer.parseInt(message);
 			if(n<0 || n>FileIO.messages.length - 1) {
@@ -41,6 +50,7 @@ public class BadWord {
 		this.message = b.getMessage();
 		this.index = index;
 	}
+	
 	public String getBadWord() {
 		return badWord;
 	}
@@ -58,5 +68,10 @@ public class BadWord {
 	}
 	public String locateInString() {
 		return badWord + " found at index " + index;
+	}
+	public boolean equals(BadWord that) {
+		if(this.index == that.index && this.badWord == that.badWord)
+			return true;
+		return false;
 	}
 }

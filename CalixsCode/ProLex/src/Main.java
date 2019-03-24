@@ -129,23 +129,24 @@ public class Main extends JPanel {
 				while (!foundWords.isEmpty()) {
 					BadWord b = foundWords.get(0);
 					h.removeAllHighlights();
-					// HIGHLIGHT?
 					try {
 						h.addHighlight(b.getIndex(), b.getIndex() + b.getBadWord().length(), painter);
 					} catch (BadLocationException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					int n = JOptionPane.showOptionDialog(null, b.getMessage() + b.getReplacement(), "Bad word found!",
-							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, o, o[1]);
+					int n = 2;
+
+					if (!b.isKept())
+						n = JOptionPane.showOptionDialog(null, b.getMessage() + b.getReplacement(), "Bad word found!",
+								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, o, o[1]);
 					if (n == 0) {// replace
 						h.removeAllHighlights();
-						// code that replaces the bad word
 						editor.setText(editor.getText().substring(0, b.getIndex()) + b.getReplacement()
 								+ editor.getText().substring(b.getIndex() + b.getBadWord().length()));
-						// editor.setText(editor.getText().replace(b.getBadWord(), b.getReplacement()));
-					} else {// keep
-						continue;
+
+					} else if (n == 1) {// keep
+						b.setKept(true);
+						h.removeAllHighlights();
 					}
 
 					h.removeAllHighlights();
@@ -204,7 +205,7 @@ public class Main extends JPanel {
 
 		words.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				String pass = JOptionPane.showInputDialog(null, "Please enter the password to access blacklist",
 						"Blacklist Login", JOptionPane.QUESTION_MESSAGE);
 				if (pass != null && pass.equals("mature")) {
