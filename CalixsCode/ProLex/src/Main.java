@@ -1,4 +1,4 @@
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -13,7 +13,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
+import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,6 +28,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
+
 
 public class Main extends JPanel {
 	public static ArrayList<BadWord> badWords;
@@ -46,13 +47,20 @@ public class Main extends JPanel {
 	private Color c = new Color(47, 47, 47);
 	private Color y = new Color(0, 255, 0); // Text
 	private Color p = new Color(255, 0, 0); // Highlight
-
+	public static final String fileName = "data" + FileIO.fileSep + "def.txt";
+	private ImageIcon clearImg = new ImageIcon("data" + FileIO.fileSep + "clear.png");
+	private ImageIcon copyImg = new ImageIcon("data" + FileIO.fileSep + "copy.png");
+	private ImageIcon exitImg = new ImageIcon("data" + FileIO.fileSep + "exit.png");
+	private ImageIcon filterImg = new ImageIcon("data" + FileIO.fileSep + "filter.png");
+	private ImageIcon listImg = new ImageIcon("data" + FileIO.fileSep + "list.png");
+	private ImageIcon pasteImg = new ImageIcon("data" + FileIO.fileSep + "paste.png");
+	
+	
 	public Main() {
-
 		title = new JLabel();
 		title.setFont(title.getFont().deriveFont(Font.PLAIN, 75));
 
-		UIManager.put("nimbusBase", new Color(0, 0, 255));
+		UIManager.put("nimbusBase", new Color(232, 219, 249));
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 			if ("Nimbus".equals(info.getName())) {
 				try {
@@ -77,14 +85,14 @@ public class Main extends JPanel {
 		menu.setBackground(new Color(52, 53, 57));
 		menu.setLayout(null);
 
-		exit = new JButton();
-		copy = new JButton();
-		paste = new JButton();
-		words = new JButton();
-		clear = new JButton();
-		run = new JButton();
+		exit = new JButton(exitImg);
+		copy = new JButton(copyImg);
+		paste = new JButton(pasteImg);
+		words = new JButton(listImg);
+		clear = new JButton(clearImg);
+		run = new JButton(filterImg);
 
-		frmMomentum.setTitle("ProLex Profanity Filter");
+		frmMomentum.setTitle("Prolex");
 		frmMomentum.setBounds(100, 100, 1100, 700);
 		frmMomentum.setBackground(new Color(255));
 		frmMomentum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,9 +102,9 @@ public class Main extends JPanel {
 		editor = new JTextArea(100, 100);
 		editor.setBounds(350, 50, 720, 600);
 		editor.setBackground(new Color(255, 255, 255));
-		editor.setSelectedTextColor(p);
-		editor.setSelectionColor(c);
-		editor.setForeground(y);
+		editor.setSelectedTextColor(new Color(78, 120, 237));
+		editor.setSelectionColor(Color.WHITE);
+		editor.setForeground(Color.BLACK);
 		editor.setCaretColor(Color.BLACK);
 		editor.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 		scroll = new JScrollPane(editor, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -210,7 +218,7 @@ public class Main extends JPanel {
 						"Blacklist Login", JOptionPane.QUESTION_MESSAGE);
 				if (pass != null && pass.equals("mature")) {
 					String str = "";
-					ArrayList<String> lines = FileIO.readFile("data" + FileIO.fileSep + "def.txt");
+					ArrayList<String> lines = FileIO.readFile(fileName);
 					for (String line : lines)
 						if (!line.equals(""))
 							str += line + FileIO.lineSep;
@@ -220,24 +228,12 @@ public class Main extends JPanel {
 			}
 		});
 
-		run.setBounds(15, 95, 300, 50);
-		run.setFont(run.getFont().deriveFont(Font.PLAIN, 20f));
-		run.setText("FILTER");
-		copy.setBounds(15 + 25, 195, 250, 50);
-		exit.setFont(exit.getFont().deriveFont(Font.PLAIN, 20f));
-		exit.setText("Exit");
-		paste.setBounds(15 + 25, 295, 250, 50);
-		words.setFont(words.getFont().deriveFont(Font.PLAIN, 20f));
-		words.setText("Blacklisted Words");
-		clear.setBounds(15 + 25, 395, 250, 50);
-		paste.setFont(paste.getFont().deriveFont(Font.PLAIN, 20f));
-		paste.setText("Paste Clipboard");
-		words.setBounds(15 + 25, 495, 250, 50);
-		clear.setFont(clear.getFont().deriveFont(Font.PLAIN, 20f));
-		clear.setText("Clear");
-		exit.setBounds(15 + 25, 595, 250, 50);
-		copy.setFont(copy.getFont().deriveFont(Font.PLAIN, 20f));
-		copy.setText("Copy Contents");
+		run.setBounds(15 + 25, 95, 220, 43);
+		copy.setBounds(15 + 25, 195, 227, 43);
+		paste.setBounds(15 + 25, 295, 227, 43);
+		clear.setBounds(15 + 25, 395, 227, 43);
+		words.setBounds(15 + 25, 495, 227, 43);
+		exit.setBounds(15 + 25, 595, 227, 43);
 		menu.add(run);
 		menu.add(paste);
 		menu.add(words);
@@ -248,7 +244,7 @@ public class Main extends JPanel {
 	}
 
 	public static void main(String[] args) {
-		ArrayList<String> strings = FileIO.readFile("src" + FileIO.fileSep + "def.txt");
+		ArrayList<String> strings = FileIO.readFile(fileName);
 		badWords = FileIO.readBadWords(strings);
 
 		//
